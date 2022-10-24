@@ -1,8 +1,11 @@
 package com.springboot.crud.controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,5 +24,16 @@ public class PessoaController {
 	@GetMapping
 	public List<Pessoa> listar() {
 		return pessoaRepository.findAll();
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Pessoa> obter(@PathVariable Long id) {
+		Optional<Pessoa> pessoa = pessoaRepository.findById(id);
+		
+		if(pessoa.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return ResponseEntity.ok(pessoa.get());
 	}
 }
