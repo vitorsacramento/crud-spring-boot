@@ -60,7 +60,7 @@ public class PessoaController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Pessoa> excluir(@PathVariable Long id) {
+	public ResponseEntity<Void> excluir(@PathVariable Long id) {
 		
 		if(!pessoaRepository.existsById(id)) {
 			return ResponseEntity.notFound().build();
