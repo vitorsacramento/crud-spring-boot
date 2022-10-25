@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,5 +57,17 @@ public class PessoaController {
 		pessoa = pessoaRepository.save(pessoa);
 		
 		return ResponseEntity.ok(pessoa);
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Pessoa> excluir(@PathVariable Long id) {
+		
+		if(!pessoaRepository.existsById(id)) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		pessoaRepository.deleteById(id);
+		
+		return ResponseEntity.noContent().build();
 	}
 }
